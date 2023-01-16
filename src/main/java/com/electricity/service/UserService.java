@@ -1,7 +1,6 @@
 package com.electricity.service;
 
 import com.electricity.dto.UserDTO;
-import com.electricity.entity.User;
 
 import java.util.List;
 
@@ -17,5 +16,5 @@ public interface UserService {
 
     UserDTO update(Long id, UserDTO newUserDTO);
 
-    User findByEmail(String email);
+    UserDTO findByEmail(String email);
 }

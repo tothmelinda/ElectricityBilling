@@ -25,7 +25,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ServiceException());
+        User user = userRepository.findById(id).
+                orElseThrow(() -> new ServiceException("notFound", "Not Found(fromService)", "user", new Object[]{id}));
         return userMapper.toDTO(user);
     }
 
@@ -36,7 +37,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(ServiceException::new);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ServiceException("notFound", "Not Found(fromService)", "user", new Object[]{id}));
         userRepository.delete(user);
     }
 

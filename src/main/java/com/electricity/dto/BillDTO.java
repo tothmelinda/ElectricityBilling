@@ -1,22 +1,19 @@
-package com.electricity.entity;
+package com.electricity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public class Bill {
+public class BillDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String description;
@@ -33,7 +30,6 @@ public class Bill {
 
     private String paymentMethod;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    private UserDTO user;
+
 }

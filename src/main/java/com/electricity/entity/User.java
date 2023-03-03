@@ -12,6 +12,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -19,7 +20,10 @@ public class User {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String firstName;
+
+    @Column(nullable = false)
+    private String lastName;
 
     @Column(nullable = false, unique = true)
     private String email;
@@ -27,7 +31,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column
     private String phoneNumber;
 
+    @Column
     private String image;
 }

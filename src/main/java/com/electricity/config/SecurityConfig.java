@@ -1,61 +1,57 @@
 package com.electricity.config;
 
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-//    private final UserServiceImpl userServiceImpl;
-//
-//    public SecurityConfig(UserServiceImpl userServiceImpl){
-//        this.userServiceImpl = userServiceImpl;
-//    }
-//
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-//        http
-//                .csrf().disable()
-//                .authorizeRequests()
-//                .antMatchers("/admin/**").hasAnyRole(ADMIN.name())
-//                .antMatchers("/**").authenticated()
-//                .and()
-//                .formLogin()
-//                .passwordParameter("password")
-//                .usernameParameter("email")
-//                .and()
-//                .rememberMe()
-//                .rememberMeParameter("remember-me")
-//                .and()
-//                .logout()
-//                .clearAuthentication(true)
-//                .invalidateHttpSession(true)
-//                .deleteCookies("JSESSIONID", "remember-me");
-//            return http.build();
-//    }
-//
-//    @Bean
-//    public AuthenticationManager authManager(HttpSecurity http) throws Exception{
-//        return http.getSharedObject(AuthenticationManagerBuilder.class)
-//                .userDetailsService(userServiceImpl)
-//                .passwordEncoder(passwordEncoder())
-//                .and()
-//                .build();
-//    }
-//
-//    @Bean
-//    public PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder(10);
-//    }
+    private final JwtAuthenticationFilter jwtAuthFilter;
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        return http.csrf().disable().build();
+    private final AuthenticationProvider authenticationProvider;
+
+    private final LogoutHandler logoutHandler;
+
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .csrf()
+        .disable()
+        .authorizeHttpRequests()
+        .requestMatchers(myRequestMatcher())
+          .permitAll()
+        .anyRequest()
+          .authenticated()
+        .and()
+          .sessionManagement()
+          .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+        .authenticationProvider(authenticationProvider)
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+        .logout()
+        .logoutUrl("/api/v1/auth/logout")
+        .addLogoutHandler(logoutHandler)
+        .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+    ;
+
+    return http.build();
+  }
+
+    public RequestMatcher myRequestMatcher() {
+        return new AntPathRequestMatcher("/**");
     }
 }

@@ -1,11 +1,16 @@
 package com.electricity.dto;
 
+import com.electricity.config.token.Token;
+import com.electricity.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,4 +31,9 @@ public class UserDTO implements Serializable {
     private String phoneNumber;
 
     private String image;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    private List<Token> tokens;
 }

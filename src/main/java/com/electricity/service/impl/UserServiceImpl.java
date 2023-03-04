@@ -6,13 +6,11 @@ import com.electricity.exception.ServiceException;
 import com.electricity.mapper.UserMapper;
 import com.electricity.repository.UserRepository;
 import com.electricity.service.UserService;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -64,7 +62,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findByEmail(String email) {
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException(String.format("User with id %d not found", email)));;
         return userMapper.toDTO(user);
     }
 }

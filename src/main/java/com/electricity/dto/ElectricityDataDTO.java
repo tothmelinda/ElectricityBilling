@@ -1,6 +1,6 @@
 package com.electricity.dto;
 
-import com.electricity.entity.User;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +17,14 @@ public class ElectricityDataDTO {
 
     private Long id;
 
-    private User user;
+    private UserDTO user;
 
     private String meterId;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime startDate;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime endDate;
 
     private int startReading;

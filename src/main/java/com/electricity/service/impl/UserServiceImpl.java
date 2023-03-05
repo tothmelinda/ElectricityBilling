@@ -46,7 +46,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO update(Long id, UserDTO newUserDTO) {
-        User oldUser = userRepository.findById(id).orElseThrow(() -> new NoSuchElementException(String.format("User with id %d not found", id)));
+        User oldUser = userRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException(String.format("User with id %d not found", id)));
 
         oldUser.setFirstName(newUserDTO.getFirstName());
         oldUser.setLastName(newUserDTO.getLastName());

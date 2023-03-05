@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Bill {
+public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class Bill {
 
     private LocalDate paidDate;
 
-    private boolean isPaid;
+    private Boolean isPaid;
 
     private String paymentMethod;
 

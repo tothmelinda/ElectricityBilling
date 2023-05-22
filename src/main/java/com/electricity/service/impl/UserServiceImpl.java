@@ -7,6 +7,8 @@ import com.electricity.mapper.UserMapper;
 import com.electricity.repository.UserRepository;
 import com.electricity.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,9 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     private final UserMapper userMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<UserDTO> findAll() {
@@ -34,6 +39,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO add( UserDTO userDTO) {
+        String encodedPassword = passwordEncoder.encode(userDTO.getPassword());
+        userDTO.setPassword(encodedPassword);
         return userMapper.toDTO(userRepository.save(userMapper.toEntity(userDTO)));
     }
 

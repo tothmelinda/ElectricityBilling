@@ -46,7 +46,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
         oldInvoice.setUser(userMapper.toEntity(invoiceDTO.getUser()));
         oldInvoice.setDescription(invoiceDTO.getDescription());
-        oldInvoice.setDescription(invoiceDTO.getDescription());
+        oldInvoice.setTotalAmount(invoiceDTO.getTotalAmount());
         oldInvoice.setDateIssued(invoiceDTO.getDateIssued());
         oldInvoice.setDueDate(invoiceDTO.getDueDate());
         oldInvoice.setPaidDate(invoiceDTO.getPaidDate());

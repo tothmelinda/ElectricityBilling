@@ -6,6 +6,5 @@ CREATE TABLE IF NOT EXISTS users(
     password VARCHAR(100),
     phone_number VARCHAR(100),
     image VARCHAR(100),
-    role VARCHAR(20),
-    tokens JSONB
+    role VARCHAR(20)
 );

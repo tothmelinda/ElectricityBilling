@@ -1,9 +1,6 @@
 package com.electricity.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "users")
 public class User {
 
@@ -36,4 +34,8 @@ public class User {
 
     @Column
     private String image;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
 }

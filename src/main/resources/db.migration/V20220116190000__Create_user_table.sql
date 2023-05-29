@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS users(
     email VARCHAR(100),
     password VARCHAR(100),
     phone_number VARCHAR(100),
-    image VARCHAR(100)
+    image VARCHAR(100),
+    role VARCHAR(20)
 );

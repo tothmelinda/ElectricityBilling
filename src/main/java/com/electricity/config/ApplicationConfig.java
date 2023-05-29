@@ -1,13 +1,13 @@
 package com.electricity.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
-import javax.swing.plaf.basic.BasicToolBarUI;
-
 @Configuration
+@RequiredArgsConstructor
 //@EnableSwagger2
 public class ApplicationConfig {
 
@@ -26,4 +26,5 @@ public class ApplicationConfig {
         messageSource.setBasenames("messages/messages");
         return messageSource;
     }
+
 }
